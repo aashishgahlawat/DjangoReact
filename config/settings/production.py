@@ -2,15 +2,19 @@
 # ./manage.py check --deploy
 
 from .base import *
+from decouple import Csv
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['happyhome.com', 'www.happyhome.com']
+# ALLOWED_HOSTS = ['happyhome.com', 'www.happyhome.com']
+# ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # Get code error notification
-ADMINS = [("Aashish Gahlawat", "aashishgahlawat9@gmail.co"), ]
+# ADMINS = [("aashish", "aashishgahlawat9@gmail.com"), ]
+ADMINS = config('ADMIN', cast=Csv(post_process=tuple))
 
 # Get broken links notification
 MANAGERS = ADMINS
@@ -21,14 +25,22 @@ MANAGERS = ADMINS
 # with open(os.path.join(BASE_DIR, 'secret_key.txt')) as f:
 #     SECRET_KEY = f.read().strip()
 
+# DATABASES = {
+#     'default': config(
+#         'DATABASE_URL',
+#         default='sqlite:///' + BASE_DIR.child('db.sqlite3'),
+#         cast=db_url
+#     )
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'database_name_here',
-        'USER': 'database_user_name',
-        'PASSWORD': 'database_password',
-        'HOST': 'aws_ec2_url',
-        'PORT': 3306,
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int),
     }
 }
 

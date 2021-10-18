@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+my0#h06p6hmba^c$2zh9t3wf#4xm-3_z8f=q5m33$7a*1uauy'
+# SECRET_KEY = 'django-insecure-+my0#h06p6hmba^c$2zh9t3wf#4xm-3_z8f=q5m33$7a*1uauy'
+SECRET_KEY = config('SECRET_KEY')
 
 # Application definition
 
@@ -46,6 +48,8 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+AUTH_USER_MODEL = 'master.User'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
@@ -54,8 +58,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
-
-AUTH_USER_MODEL = 'master.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
