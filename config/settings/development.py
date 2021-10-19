@@ -21,8 +21,18 @@ DATABASES = {
         'PASSWORD': '12345',
         'HOST': '127.0.0.1',
         'PORT': 3307,
-    }
+    },
+    # 'postgres': {
+    #     'ENGINE': '',
+    #     'NAME': '',
+    #     'USER': '',
+    #     'PASSWORD': '',
+    #     'HOST': '',
+    #     'PORT': '',
+    # }
 }
+
+# DATABASE_ROUTERS = ['config.routers.db_routers.LocationRouter', ]
 
 # Your stuff...
 # ------------------------------------------------------------------------------
